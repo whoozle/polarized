@@ -6,13 +6,19 @@ from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cmc
 
 class Palette(object):
-	def __init__(self, max_colors):
-		self.n = math.trunc(math.log(max_colors, 2))
-		if 2 ** self.n != max_colors:
+
+	@staticmethod
+	def stepCount(max_colors):
+		n = math.trunc(math.log(max_colors, 2))
+		if 2 ** n != max_colors:
 			raise Exception("max colors must be power of 2")
+		return n
+
+	def __init__(self, max_colors):
+		self.n = Palette.stepCount(max_colors)
 		self.__colors = set()
 
-	def add_color(self, rgb):
+	def addColor(self, rgb):
 		self.__colors.add(rgb)
 
 	def quantize(self):
