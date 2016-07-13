@@ -14,7 +14,7 @@ w, h, pixels, info = reader.asRGB()
 planes = info['planes']
 
 #pal = Palette(16)
-#
+print "building blocks..."
 image = Image(w, h)
 y = 0
 for row in pixels:
@@ -27,7 +27,7 @@ for row in pixels:
 
 #palette = pal.quantize()
 #picker = ColorPicker(palette)
+print "splitting %d blocks..." %(len(image.blocks))
 picker = ColorPicker(EGA)
 for block in image.blocks:
-	color1, color2 = map(lambda c: picker.getColor(c), block.quantize(2))
-	#print color1, color2
+	binaryBlock = block.split(picker)
