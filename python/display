@@ -2,6 +2,7 @@
 
 from polarized.palette import Palette, ColorPicker, EGA
 from polarized.image import Image
+from polarized.unicode import BLOCKS
 import png
 import argparse
 
@@ -29,5 +30,17 @@ for row in pixels:
 #picker = ColorPicker(palette)
 print "splitting %d blocks..." %(len(image.blocks))
 picker = ColorPicker(EGA)
+line = ""
 for block in image.blocks:
 	binaryBlock = block.split(picker)
+	char = None
+	charRMS = None
+	for blockChar, blockData in BLOCKS:
+		rms = binaryBlock.rms(blockData)
+		if char is None or rms < charRMS:
+			char = blockChar
+			charRMS = rms
+	line += char
+	if len(line) == image.bw:
+		print line
+		line = ""

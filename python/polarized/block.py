@@ -4,6 +4,8 @@ from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cmc
 
+import math
+
 class BinaryBlock(object):
     def __init__(self, data = None, color1 = None, color2 = None):
         self.color1, self.color2 = color1, color2
@@ -23,9 +25,12 @@ class BinaryBlock(object):
             self.__data.append(d1 / (d1 + d2))
         assert len(self.__data) == 64
 
-    def rms(self, block):
-        for c1, c2 in zip(self.__data, block.__data):
-            print c1, c2
+    def rms(self, data):
+        rms = 0
+        for c1, c2 in zip(self.__data, data):
+            d = (c1 - c2)
+            rms += d * d
+        return math.sqrt(rms / len(data))
 
 class Block(object):
     def __init__(self, data = None):
