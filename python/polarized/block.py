@@ -7,3 +7,6 @@ class Block(object):
 
     def set(self, y, x, rgb):
         self.__data[y * 8 + x] = rgb
+
+    def __str__(self):
+        return "foo"

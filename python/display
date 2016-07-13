@@ -16,12 +16,14 @@ planes = info['planes']
 #pal = Palette(16)
 #
 image = Image(w, h)
+y = 0
 for row in pixels:
 	offset = 0
-	for i in xrange(0, w):
+	for x in xrange(0, w):
 		rgb = tuple(row[offset: offset + 3])
-#		pal.addColor(rgb)
+		image.set(y, x, rgb)
 		offset += 3
+	y += 1
 
 #palette = pal.quantize()
 #picker = ColorPicker(palette)

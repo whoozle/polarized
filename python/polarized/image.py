@@ -7,3 +7,11 @@ class Image(object):
         self.__blocks = []
         for i in xrange(0, self.bw * self.bh):
             self.__blocks.append(Block())
+
+    def set(self, y, x, rgb):
+        by, bx = y / 8, x / 8
+        x %= 8
+        y %= 8
+        block = self.__blocks[by * self.bw + bx]
+        print by, bx, y, x
+        block.set(y, x, rgb)
