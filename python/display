@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+import polarized
+import png
+import argparse
+
+parser = argparse.ArgumentParser(description='Read PNG file and display it in your terminal')
+parser.add_argument('input', help='input PNG file')
+
+args = parser.parse_args()
+print args
