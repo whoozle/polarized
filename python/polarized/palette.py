@@ -1,6 +1,10 @@
 from operator import getitem
 import math
 
+from colormath.color_objects import sRGBColor, LabColor
+from colormath.color_conversions import convert_color
+from colormath.color_diff import delta_e_cmc
+
 class Palette(object):
 	def __init__(self, max_colors):
 		self.n = math.trunc(math.log(max_colors, 2))
@@ -49,3 +53,23 @@ class Palette(object):
 		next_2 = colors[colors_n / 2:]
 		self.__qstep(palette, next_1, depth)
 		self.__qstep(palette, next_2, depth)
+
+class ColorPicker(object):
+	def __init__(self, palette):
+		self.__colors = []
+		for r, g, b in palette:
+			rgb = sRGBColor(r, g, b, is_upscaled = True)
+			lab = convert_color(rgb, LabColor)
+			self.__colors.append((rgb, lab))
+
+	def getColor(self, rgb):
+			rgb = sRGBColor(*rgb, is_upscaled = True)
+			src = convert_color(rgb, LabColor)
+			match_color = None
+			match_delta = None
+			for dst_rgb, dst in self.__colors:
+				d = delta_e_cmc(src, dst, 1, 1)
+				if (match_color is None) or (d < match_delta):
+					match_color = dst_rgb
+					match_delta = d
+			return match_color.get_upscaled_value_tuple()

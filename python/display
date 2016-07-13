@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from polarized.palette import Palette
+from polarized.palette import Palette, ColorPicker
 import png
 import argparse
 
@@ -23,3 +23,7 @@ for row in pixels:
 		offset += 3
 
 palette = pal.quantize()
+print palette
+picker = ColorPicker(palette)
+closest = picker.getColor((255, 0, 255))
+print closest
