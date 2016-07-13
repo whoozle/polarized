@@ -13,5 +13,8 @@ class Image(object):
         x %= 8
         y %= 8
         block = self.__blocks[by * self.bw + bx]
-        print by, bx, y, x
         block.set(y, x, rgb)
+
+    @property
+    def blocks(self):
+        return self.__blocks

@@ -1,3 +1,5 @@
+from palette import Palette
+
 class Block(object):
     def __init__(self, data = None):
         if data is None:
@@ -8,5 +10,8 @@ class Block(object):
     def set(self, y, x, rgb):
         self.__data[y * 8 + x] = rgb
 
-    def __str__(self):
-        return "foo"
+    def quantize(self, maxColors):
+        p = Palette(maxColors)
+        for rgb in self.__data:
+            p.addColor(rgb)
+        return p.quantize()

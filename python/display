@@ -28,5 +28,6 @@ for row in pixels:
 #palette = pal.quantize()
 #picker = ColorPicker(palette)
 picker = ColorPicker(EGA)
-closest = picker.getColor((255, 0, 255))
-print closest
+for block in image.blocks:
+	color1, color2 = map(lambda c: picker.getColor(c), block.quantize(2))
+	#print color1, color2
