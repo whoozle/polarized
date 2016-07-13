@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from polarized.palette import Palette, ColorPicker
+from polarized.palette import Palette, ColorPicker, EGA
+from polarized.image import Image
 import png
 import argparse
 
@@ -12,18 +13,18 @@ reader = png.Reader(args.input)
 w, h, pixels, info = reader.asRGB()
 planes = info['planes']
 
-pal = Palette(16)
-
-offset = 0
+#pal = Palette(16)
+#
+image = Image(w, h)
 for row in pixels:
 	offset = 0
 	for i in xrange(0, w):
 		rgb = tuple(row[offset: offset + 3])
-		pal.add_color(rgb)
+#		pal.addColor(rgb)
 		offset += 3
 
-palette = pal.quantize()
-print palette
-picker = ColorPicker(palette)
+#palette = pal.quantize()
+#picker = ColorPicker(palette)
+picker = ColorPicker(EGA)
 closest = picker.getColor((255, 0, 255))
 print closest
