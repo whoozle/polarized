@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import polarized
+from polarized.palette import Palette
 import png
 import argparse
 
@@ -9,4 +9,16 @@ parser.add_argument('input', help='input PNG file')
 
 args = parser.parse_args()
 reader = png.Reader(args.input)
-w, h, pixels, info = reader.read()
+w, h, pixels, info = reader.asRGB()
+planes = info['planes']
+
+pal = Palette(16)
+
+offset = 0
+for row in pixels:
+	offset = 0
+	for i in xrange(0, w):
+		rgb = tuple(row[offset: offset + 3])
+		pal.add_color(rgb)
+		offset += 3
+pal.quantize()
