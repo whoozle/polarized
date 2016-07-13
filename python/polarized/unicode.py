@@ -45,4 +45,3 @@ def _translate(data):
     return blockData
 
 BLOCKS = [_translate(block) for char, block in _blocks]
-print BLOCKS
