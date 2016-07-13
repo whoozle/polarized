@@ -8,4 +8,5 @@ parser = argparse.ArgumentParser(description='Read PNG file and display it in yo
 parser.add_argument('input', help='input PNG file')
 
 args = parser.parse_args()
-print args
+reader = png.Reader(args.input)
+w, h, pixels, info = reader.read()
