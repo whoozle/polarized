@@ -26,40 +26,19 @@ for row in pixels:
 		offset += 3
 	y += 1
 
-import curses
-
-def main(stdscr):
-	curses.start_color()
-	curses.use_default_colors()
-	for c1 in range(0, curses.COLORS):
-		for c2 in range(0, curses.COLORS):
-			curses.init_pair((c1 << 4) | c2, c2, c1)
-	try:
-		#print "splitting %d blocks..." %(len(image.blocks))
-		picker = ColorPicker(XTERM)
-		line = []
-		y = 0
-		for block in image.blocks:
-			binaryBlock = block.split(picker)
-			char = None
-			charRMS = None
-			for blockChar, blockData in BLOCKS:
-				rms = binaryBlock.rms(blockData)
-				if char is None or rms < charRMS:
-					char = blockChar
-					charRMS = rms
-			line.append((char, binaryBlock.color1[0], binaryBlock.color2[0]))
-			if len(line) == image.bw:
-				x = 0
-				for char, c1, c2 in line:
-					stdscr.addstr(y, x, ' ', curses.color_pair((c1 << 4) | c2))
-					x += 1
-				y += 1
-				stdscr.refresh()
-				line = []
-	except curses.ERR:
-		# End of screen reached
-		pass
-	stdscr.getch()
-
-curses.wrapper(main)
+	#print "splitting %d blocks..." %(len(image.blocks))
+	picker = ColorPicker(XTERM)
+	line = []
+	for block in image.blocks:
+		binaryBlock = block.split(picker)
+		char = None
+		charRMS = None
+		for blockChar, blockData in BLOCKS:
+			rms = binaryBlock.rms(blockData)
+			if char is None or rms < charRMS:
+				char = blockChar
+				charRMS = rms
+		line.append((char, binaryBlock.color1[0], binaryBlock.color2[0]))
+		if len(line) == image.bw:
+			print line
+			line = []
