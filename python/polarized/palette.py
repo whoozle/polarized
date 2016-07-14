@@ -23,6 +23,8 @@ class Palette(object):
 
 	def quantize(self):
 		colors = list(self.__colors)
+		if (len(colors) <= self.n):
+			return colors
 		palette = []
 		self.__qstep(palette, colors, 0)
 		return palette
