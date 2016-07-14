@@ -15,7 +15,7 @@ w, h, pixels, info = reader.asRGB()
 planes = info['planes']
 
 #pal = Palette(16)
-#print "building blocks..."
+print "building blocks..."
 image = Image(w, h)
 y = 0
 for row in pixels:
@@ -26,19 +26,19 @@ for row in pixels:
 		offset += 3
 	y += 1
 
-	#print "splitting %d blocks..." %(len(image.blocks))
-	picker = ColorPicker(XTERM)
-	line = []
-	for block in image.blocks:
-		binaryBlock = block.split(picker)
-		char = None
-		charRMS = None
-		for blockChar, blockData in BLOCKS:
-			rms = binaryBlock.rms(blockData)
-			if char is None or rms < charRMS:
-				char = blockChar
-				charRMS = rms
-		line.append((char, binaryBlock.color1[0], binaryBlock.color2[0]))
-		if len(line) == image.bw:
-			print line
-			line = []
+print "splitting %d blocks..." %(len(image.blocks))
+picker = ColorPicker(XTERM)
+line = []
+for block in image.blocks:
+	binaryBlock = block.split(picker)
+	char = None
+	charRMS = None
+	for blockChar, blockData in BLOCKS:
+		rms = binaryBlock.rms(blockData)
+		if char is None or rms < charRMS:
+			char = blockChar
+			charRMS = rms
+	line.append((char, binaryBlock.color1[0], binaryBlock.color2[0]))
+	if len(line) == image.bw:
+		print line
+		line = []
