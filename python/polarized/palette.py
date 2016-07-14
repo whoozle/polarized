@@ -58,8 +58,9 @@ class Palette(object):
 		colors = sorted(colors, key = lambda x: getitem(x, plane), reverse = True)
 
 		depth += 1
-		next_1 = colors[: colors_n / 2]
-		next_2 = colors[colors_n / 2:]
+		median = colors_n / 2
+		next_1 = colors[: median]
+		next_2 = colors[median:]
 		self.__qstep(palette, next_1, depth)
 		self.__qstep(palette, next_2, depth)
 
