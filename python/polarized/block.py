@@ -49,5 +49,8 @@ class Block(object):
 		return p.quantize()
 
 	def split(self, picker):
-		color1, color2 = map(lambda c: picker.getColor(c), self.quantize(2))
+		colors = self.quantize(2)
+		if len(colors) < 2:
+			colors = [colors[0], colors[0]]
+		color1, color2 = map(lambda c: picker.getColor(c), colors)
 		return BinaryBlock(self.__data, color1, color2)
