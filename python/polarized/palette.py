@@ -15,6 +15,7 @@ class Palette(object):
 		return n
 
 	def __init__(self, max_colors):
+		self.maxColors = max_colors
 		self.n = Palette.stepCount(max_colors)
 		self.__colors = set()
 
@@ -23,7 +24,7 @@ class Palette(object):
 
 	def quantize(self):
 		colors = list(self.__colors)
-		if (len(colors) <= self.n):
+		if (len(colors) <= self.maxColors):
 			return colors
 		palette = []
 		self.__qstep(palette, colors, 0)
